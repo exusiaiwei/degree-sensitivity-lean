@@ -8,7 +8,7 @@ public import Mathlib.Analysis.SpecialFunctions.Pow.Real
 @[expose] public section
 
 /-!
-# Advertised Statements: Degree–Sensitivity Exponent (Tao's Constant #37a)
+# Advertised Statements: Low-Degree Sensitivity Bounds & Asymptotic Degree–Sensitivity Exponent
 
 This is the small, self-contained trusted statement surface audited by a human reader.
 All definitions use standard Mathlib primitives (`Fin`, `Finset`, `MvPolynomial`,
@@ -46,9 +46,12 @@ the minimum total degree of a real multivariate polynomial representing `f` on `
 noncomputable def polyDegree {n : ℕ} (f : BooleanFun n) : ℕ :=
   sInf { d : ℕ | ∃ P : MvPolynomial (Fin n) ℝ, RepresentsPoly P f ∧ P.totalDegree ≤ d }
 
-/-- Tao's Optimization Constant #37a (the degree–sensitivity exponent `C_37`):
+/-- The asymptotic uniform-big-O degree–sensitivity exponent:
 the infimum of all real exponents `α` for which `s(f) = O(deg(f)^α)` holds uniformly
-over all nonconstant Boolean functions `f`. -/
+over all nonconstant Boolean functions `f`.
+Note: this is distinct from Tao's finite-supremum constant
+`C_37 := sup_{deg(f) > 1} log(s(f)) / log(deg(f))` on Optimization Problems #37a;
+a finite-degree extremizer could affect `C_37` without affecting this asymptotic infimum. -/
 noncomputable def degSensitivityExponent : ℝ :=
   sInf { α : ℝ | ∃ C : ℝ, 0 < C ∧ ∀ (n : ℕ) (f : BooleanFun n),
     1 ≤ polyDegree f → (maxSensitivity f : ℝ) ≤ C * (polyDegree f : ℝ) ^ α }
@@ -74,8 +77,11 @@ theorem deg5_sens13_witness :
     ∃ f : BooleanFun 13, polyDegree f = 5 ∧ maxSensitivity f = 13 := by
   sorry
 
-/-- Asymptotic lower bound on Tao's Constant #37a from Kushilevitz's function and
-iterated Boolean function composition: `C_37 ≥ log 6 / log 3`. -/
+/-- Asymptotic lower bound on the uniform-big-O exponent `degSensitivityExponent` from
+Kushilevitz's `(6, 3, 6)` function and iterated Boolean function composition:
+`Real.log 6 / Real.log 3 ≤ degSensitivityExponent`.
+(For Tao's distinct finite-supremum constant `C_37`, the corresponding lower bound
+`log 6 / log 3 ≤ C_37` follows directly from `kushilevitz_witness` alone.) -/
 theorem kushilevitz_exponent_lower_bound :
     Real.log 6 / Real.log 3 ≤ degSensitivityExponent := by
   sorry

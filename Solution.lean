@@ -5,7 +5,7 @@ public import DegreeSensitivity
 public section
 
 /-!
-# Proved Solution: Degree–Sensitivity Exponent (Tao's Constant #37a)
+# Proved Solution: Low-Degree Sensitivity Bounds & Asymptotic Degree–Sensitivity Exponent
 
 Connects every advertised theorem in `Challenge.lean` to its completed,
 sorry-free proof in `DegreeSensitivity`, using only the standard Lean axioms

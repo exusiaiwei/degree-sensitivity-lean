@@ -14,7 +14,9 @@ project:
     upper bounds B_5 <= 14, B_6 <= 20, B_7 <= 28, B_8 <= 36, and B_9 <= 46 strictly
     improving the univariate symmetrisation LP bounds of Wellens (2022) via pure-integer
     Terwilliger LP/PSD certificates, sum-of-squares rigidity, and forbidden-subgraph arguments.
-    These fixed-degree bounds do not alter the asymptotic exponent bounds log_3 6 <= C_37 <= 2.
+    These fixed-degree bounds do not alter the known bounds [log_3 6, 2] on either the
+    asymptotic uniform-big-O exponent `degSensitivityExponent` or Tao's distinct finite-supremum
+    constant `C_37`.
   authors:
     - "exusiaiwei"
   license: "Apache-2.0"
@@ -77,8 +79,9 @@ status:
     asymptotic lower bound log 6 / log 3 <= degSensitivityExponent, sharp bounds B_2 = 3,
     B_3 = 6, B_4 = 9, and sharpened upper bounds B_5 <= 14, B_6 <= 20, B_7 <= 28,
     B_8 <= 36, B_9 <= 46 with zero sorry in Solution.lean and zero native_decide.
-    Does not resolve the open case (n = 14, d = 5) or alter the asymptotic bounds
-    log_3 6 <= C_37 <= 2.
+    Does not resolve the open case (n = 14, d = 5) or alter the known bounds [log_3 6, 2] on
+    either the asymptotic uniform-big-O exponent `degSensitivityExponent` or Tao's finite-supremum
+    constant `C_37`.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: ["propext", "Quot.sound", "Classical.choice"]
@@ -106,13 +109,14 @@ automation:
 
 fidelity:
   divergences: >-
-    In Challenge.lean, `degSensitivityExponent` is defined as the asymptotic infimum
-    `inf { alpha | s(f) = O(deg(f)^alpha) }`, whereas Tao's #37a page defines
-    `C_37 = sup_{deg(f) > 1} log(s(f)) / log(deg(f))`. The theorem
-    `kushilevitz_exponent_lower_bound` establishes `log 6 / log 3 <= degSensitivityExponent`
-    (which is the tighter asymptotic quantity), while `kushilevitz_witness` directly gives
-    the finite supremum bound `log 6 / log 3 <= C_37`. All fixed-degree upper bounds
-    `B_2 .. B_9` match the standard definition verbatim.
+    In Challenge.lean, `degSensitivityExponent` is defined as the asymptotic uniform-big-O
+    infimum `inf { alpha | s(f) = O(deg(f)^alpha) }`, which is distinct from Tao's finite-supremum
+    constant `C_37 = sup_{deg(f) > 1} log(s(f)) / log(deg(f))` (a finite-degree extremizer could
+    affect `C_37` without affecting `degSensitivityExponent`; this formalization does not identify
+    the two constants). `kushilevitz_exponent_lower_bound` bounds the asymptotic infimum
+    `log 6 / log 3 <= degSensitivityExponent`, while `kushilevitz_witness` directly implies
+    `log 6 / log 3 <= C_37`. All fixed-degree upper bounds `B_2 .. B_9` match the standard
+    definition verbatim.
 
 review:
   status: "self-assessed"
@@ -129,7 +133,7 @@ review:
 alignment:
   namespace: "DegreeSensitivity"
   statements:
-    - source: "Kushilevitz (1995) lower bound C_37 >= log 6 / log 3"
+    - source: "Kushilevitz (1995) asymptotic lower bound log 6 / log 3 <= degSensitivityExponent"
       lean: "DegreeSensitivity.kushilevitz_exponent_lower_bound"
       module: "Solution"
       status: "proved"

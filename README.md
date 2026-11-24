@@ -1,6 +1,6 @@
 # DegreeSensitivity: Sharp Bounds on the Sensitivity of Low-Degree Boolean Functions
 
-A **Lean 4** formalization (packaged for the [Palomar](https://palomar-registry.org/) registry; submissions go via [submit.palomar-registry.org](https://submit.palomar-registry.org/)) establishing exact sensitivity bounds and sharpened low-degree upper bounds related to Terence Tao's Optimization Constant [#37a](https://teorth.github.io/optimizationproblems/constants/37a.html) (the degree–sensitivity exponent $C_{37}$).
+A **Lean 4** formalization (packaged for the [Palomar](https://palomar-registry.org/) registry; submissions go via [submit.palomar-registry.org](https://submit.palomar-registry.org/)) establishing exact sensitivity bounds, sharpened low-degree upper bounds, and an asymptotic degree–sensitivity exponent lower bound, motivated by Terence Tao's Optimization Constant [#37a](https://teorth.github.io/optimizationproblems/constants/37a.html).
 
 ## Scope & Main Results
 
@@ -20,10 +20,12 @@ This development formalizes **13 headline theorems** in [`Challenge.lean`](Chall
 | $9$ | $47$ | $B_9 \le 47$ | **$B_9 \le 46$** | Single pure-integer Subset-$J$ Terwilliger Farkas certificate |
 
 In addition, `kushilevitz_exponent_lower_bound` formally establishes the asymptotic lower bound
-$$\frac{\log 6}{\log 3} \le C_{37}$$
+$$\frac{\log 6}{\log 3} \le \mathrm{degSensitivityExponent} := \inf\bigl\{\alpha \in \mathbb{R} \;\big|\; \exists C > 0,\;\forall f,\; \deg(f) \ge 1 \Rightarrow s(f) \le C\deg(f)^\alpha\bigr\}$$
 via iterated Boolean function composition and the Chebyshev cubic upper bound $s(f) \le 4 \deg(f)^3$.
 
-> **Honest Scope Note:** These results improve fixed low-degree upper bounds $B_d$ for $d \in \{5, 6, 7, 8, 9\}$ and provide a zero-search algebraic proof of $B_4 = 9$. They do **not** change the asymptotic exponent bounds $\log_3 6 \le C_{37} \le 2$; in particular, $(n=14, d=5)$ remains open (`13 ≤ B_5 ≤ 14`).
+> **Distinction from Tao's Finite-Supremum Constant $C_{37}$ & Honest Scope Note:**
+> `degSensitivityExponent` is the **asymptotic uniform-big-$O$ infimum**, which is distinct from Tao's finite-supremum constant $C_{37} := \sup_{\deg(f) > 1} \frac{\log s(f)}{\log \deg(f)}$ (a finite-degree extremizer could affect $C_{37}$ without affecting the asymptotic infimum; this formalization does not claim the two constants are equal). The corresponding finite-supremum lower bound $\frac{\log 6}{\log 3} \le C_{37}$ follows directly from `kushilevitz_witness` alone.
+> The fixed-degree bounds $B_5 \le 14, \dots, B_9 \le 46$ strictly improve the univariate symmetrisation LP bounds of Wellens (2022) and do **not** change the known bounds $[\log_3 6, 2]$ on either `degSensitivityExponent` or $C_{37}$; in particular, $(n=14, d=5)$ remains open (`13 ≤ B_5 ≤ 14`).
 
 ## Proof Overview
 
