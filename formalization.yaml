@@ -1,0 +1,168 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "DegreeSensitivity: Sharp Low-Degree Sensitivity Bounds for Boolean Functions"
+  description: >-
+    Lean 4 formalization of sensitivity-versus-real-degree bounds for Boolean functions
+    f : {0, 1}^n -> {0, 1}, motivated by Terence Tao's Optimization Constant #37a.
+    Establishes exact real polynomial degree via Boolean-lattice Mobius inversion,
+    explicit kernel-verified witnesses (3, 2, 3), (6, 3, 6), (9, 4, 9), and (13, 5, 13),
+    the asymptotic lower bound log 6 / log 3 <= degSensitivityExponent via iterated
+    composition and the Chebyshev cubic upper bound, exact sharp bounds B_2 = 3, B_3 = 6,
+    a zero-search 10-line elementary algebraic proof of B_4 = 9, and sharpened low-degree
+    upper bounds B_5 <= 14, B_6 <= 20, B_7 <= 28, B_8 <= 36, and B_9 <= 46 strictly
+    improving the univariate symmetrisation LP bounds of Wellens (2022) via pure-integer
+    Terwilliger LP/PSD certificates, sum-of-squares rigidity, and forbidden-subgraph arguments.
+    These fixed-degree bounds do not alter the asymptotic exponent bounds log_3 6 <= C_37 <= 2.
+  authors:
+    - "exusiaiwei"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "exusiaiwei"
+
+classification:
+  arxiv: ["math.CO", "cs.CC"]
+  msc2020: ["06E30", "68Q17", "05C35"]
+
+sources:
+  - title: "Sharpened low-degree sensitivity bounds for Boolean functions via Terwilliger LP/PSD, SOS rigidity, and forbidden subgraphs"
+    type: "original-proof"
+    relationship: "other"
+    note: >-
+      Original Lean 4 formal proofs strictly improving the univariate symmetrisation LP
+      bounds of Wellens (2022, Table 1) at degrees 5 through 9: B_5 <= 14 (from 15),
+      B_6 <= 20 (from 21), B_7 <= 28 (from 29), B_8 <= 36 (from 38), and B_9 <= 46 (from 47),
+      together with an elementary zero-search 10-line algebraic proof of sharp B_4 = 9
+      (previously proved via a 479-leaf MILP branch-and-bound certificate by Koshta, 2026)
+      and an explicit weighted-composition (13, 5, 13) witness giving 13 <= B_5 <= 14.
+  - title: "Relationships between the number of inputs and other complexity measures of Boolean functions"
+    authors:
+      - "Jake Wellens"
+    id: "arXiv:2005.00566"
+    type: "article"
+    location: "https://arxiv.org/abs/2005.00566"
+    relationship: "background"
+    note: "Published in Discrete Analysis 2022:20; establishes the univariate symmetrisation LP bounds B_4 <= 10, B_5 <= 15, B_6 <= 21, B_7 <= 29, B_8 <= 38, B_9 <= 47."
+  - title: "On the degree of Boolean functions as real polynomials"
+    authors:
+      - "Noam Nisan"
+      - "Mario Szegedy"
+    type: "article"
+    location: "Computational Complexity 4 (1994), 301-313"
+    relationship: "background"
+    note: "Foundational degree-sensitivity lower bounds and symmetrisation framework."
+  - title: "On rank vs. communication complexity"
+    authors:
+      - "Noam Nisan"
+      - "Avi Wigderson"
+    type: "article"
+    location: "Combinatorica 15 (1995), 557-565"
+    relationship: "background"
+    note: "Footnote 1 introduces Kushilevitz's 6-variable degree-3 function with sensitivity 6."
+  - title: "Optimization Problems #37a (The degree-sensitivity exponent)"
+    authors:
+      - "Terence Tao"
+    type: "web post"
+    location: "https://teorth.github.io/optimizationproblems/constants/37a.html"
+    relationship: "background"
+    note: "Problem statement and literature tracker for Tao's Constant #37a, including Koshta (2026) on degree 4."
+
+related_formalizations: []
+
+status:
+  scope: >-
+    Formalizes BooleanFun, sensitivityAt, maxSensitivity, RepresentsPoly, polyDegree,
+    degSensitivityExponent, explicit witnesses (3, 2, 3), (6, 3, 6), (9, 4, 9), (13, 5, 13),
+    asymptotic lower bound log 6 / log 3 <= degSensitivityExponent, sharp bounds B_2 = 3,
+    B_3 = 6, B_4 = 9, and sharpened upper bounds B_5 <= 14, B_6 <= 20, B_7 <= 28,
+    B_8 <= 36, B_9 <= 46 with zero sorry in Solution.lean and zero native_decide.
+    Does not resolve the open case (n = 14, d = 5) or alter the asymptotic bounds
+    log_3 6 <= C_37 <= 2.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Quot.sound", "Classical.choice"]
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["Gemini"]
+      framework: "Antigravity"
+      tool_setup: >-
+        Human-directed (exusiaiwei) multi-agent AI workflow combining Python exact rational
+        LP/PSD dual certificate discovery, small-integer unit-triangular rounding, and Lean 4
+        (v4.35.0-rc2) + Mathlib formalization verified by lake comparator (Lean kernel,
+        nanoda, and con-ron).
+      cost:
+        wall_time: "not tracked"
+        spend_usd: "not tracked"
+        hardware: "local machine"
+      prompting_notes: "Problem selection and direction by human maintainer; mathematical discovery, certificate compression, and Lean 4 formalization performed by AI agents."
+  spend_usd: "not tracked"
+  notes: >-
+    Dual certificates were found in Python, rounded to compact pure integers via unit-triangular
+    residual absorption, and checked directly inside Lean's kernel via j-sliced `by decide`
+    lemmas (with zero `native_decide` and default `maxHeartbeats`).
+
+fidelity:
+  divergences: >-
+    In Challenge.lean, `degSensitivityExponent` is defined as the asymptotic infimum
+    `inf { alpha | s(f) = O(deg(f)^alpha) }`, whereas Tao's #37a page defines
+    `C_37 = sup_{deg(f) > 1} log(s(f)) / log(deg(f))`. The theorem
+    `kushilevitz_exponent_lower_bound` establishes `log 6 / log 3 <= degSensitivityExponent`
+    (which is the tighter asymptotic quantity), while `kushilevitz_witness` directly gives
+    the finite supremum bound `log 6 / log 3 <= C_37`. All fixed-degree upper bounds
+    `B_2 .. B_9` match the standard definition verbatim.
+
+review:
+  status: "self-assessed"
+  reviewers:
+    - "exusiaiwei (direction, scope check, and Challenge.lean sign-off)"
+    - "AI verification agents (independent pure-Python Fraction certificate checkers)"
+  notes: >-
+    All Challenge.lean definitions use only standard Mathlib primitives (`Fin`, `Finset`,
+    `MvPolynomial`, `Real.log`, `sInf`), and sensitivity matches `leanprover/cslib`.
+    All 13 advertised theorems in Solution.lean pass `scripts/verify-comparator.sh`
+    across Lean's default kernel, nanoda, and con-ron (49,012 declarations `--verified`)
+    using only `[propext, Quot.sound, Classical.choice]`.
+
+alignment:
+  namespace: "DegreeSensitivity"
+  statements:
+    - source: "Kushilevitz (1995) lower bound C_37 >= log 6 / log 3"
+      lean: "DegreeSensitivity.kushilevitz_exponent_lower_bound"
+      module: "Solution"
+      status: "proved"
+      note: "Proved via explicit (6, 3, 6) witness, iterated composition, and Chebyshev cubic bound."
+    - source: "Sharp degree-4 bound B_4 = 9"
+      lean: "DegreeSensitivity.maxSensitivity_le_nine_of_deg_le_four"
+      module: "Solution"
+      status: "proved"
+      note: "Zero-search 10-line pure algebraic proof ending in 3 | 14."
+    - source: "Sharpened degree-5 bound B_5 <= 14 (improving Wellens 2022: 15)"
+      lean: "DegreeSensitivity.maxSensitivity_le_fourteen_of_deg_le_five"
+      module: "Solution"
+      status: "proved"
+      note: "4-step Terwilliger LP + SOS rigidity + no 5-regular triangle-free induced-2K_2-free graph on 14 vertices."
+    - source: "Sharpened degree-6 bound B_6 <= 20 (improving Wellens 2022: 21)"
+      lean: "DegreeSensitivity.maxSensitivity_le_twenty_of_deg_le_six"
+      module: "Solution"
+      status: "proved"
+      note: "10 small-integer j-sliced Terwilliger LP + universal SOS PSD certificates (<= 39 digits) + SOS rigidity + no 7-regular triangle-free induced-2K_2-free graph on 20 vertices."
+    - source: "Sharpened degree-7 bound B_7 <= 28 (improving Wellens 2022: 29)"
+      lean: "DegreeSensitivity.maxSensitivity_le_twentyeight_of_deg_le_seven"
+      module: "Solution"
+      status: "proved"
+      note: "Small-integer j-sliced Subset-J Terwilliger Farkas certificate (361 multipliers, <= 14 digits)."
+    - source: "Sharpened degree-8 bound B_8 <= 36 (improving Wellens 2022: 38)"
+      lean: "DegreeSensitivity.maxSensitivity_le_thirtysix_of_deg_le_eight"
+      module: "Solution"
+      status: "proved"
+      note: "Small-integer j-sliced Subset-J Terwilliger Farkas certificate (1044 multipliers, <= 19 digits)."
+    - source: "Sharpened degree-9 bound B_9 <= 46 (improving Wellens 2022: 47)"
+      lean: "DegreeSensitivity.maxSensitivity_le_fortysix_of_deg_le_nine"
+      module: "Solution"
+      status: "proved"
+      note: "Small-integer j-sliced Subset-J Terwilliger Farkas certificate (1077 multipliers, <= 20 digits)."
+
+acknowledgements: "Built with Lean 4, Mathlib, and the Palomar / Comparator (nanoda + con-ron) verification pipeline."

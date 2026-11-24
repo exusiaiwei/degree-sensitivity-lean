@@ -1,0 +1,22 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "DegreeSensitivity.nae3_witness",
+    "DegreeSensitivity.kushilevitz_witness",
+    "DegreeSensitivity.nae3_comp_nae3_witness",
+    "DegreeSensitivity.deg5_sens13_witness",
+    "DegreeSensitivity.kushilevitz_exponent_lower_bound",
+    "DegreeSensitivity.maxSensitivity_le_three_of_deg_le_two",
+    "DegreeSensitivity.maxSensitivity_le_six_of_deg_le_three",
+    "DegreeSensitivity.maxSensitivity_le_nine_of_deg_le_four",
+    "DegreeSensitivity.maxSensitivity_le_fourteen_of_deg_le_five",
+    "DegreeSensitivity.maxSensitivity_le_twenty_of_deg_le_six",
+    "DegreeSensitivity.maxSensitivity_le_twentyeight_of_deg_le_seven",
+    "DegreeSensitivity.maxSensitivity_le_thirtysix_of_deg_le_eight",
+    "DegreeSensitivity.maxSensitivity_le_fortysix_of_deg_le_nine"
+  ],
+  "definition_names": [],
+  "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
+  "enable_nanoda": true
+}
