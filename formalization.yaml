@@ -18,10 +18,10 @@ project:
     asymptotic uniform-big-O exponent `degSensitivityExponent` or Tao's distinct finite-supremum
     constant `C_37`.
   authors:
-    - "exusiaiwei"
+    - "Zichao Wei"
   license: "Apache-2.0"
   responsible_maintainers:
-    - "exusiaiwei"
+    - "Zichao Wei"
 
 classification:
   arxiv: ["math.CO", "cs.CC"]
@@ -92,7 +92,7 @@ automation:
       models: ["Gemini"]
       framework: "Antigravity"
       tool_setup: >-
-        Human-directed (exusiaiwei) multi-agent AI workflow combining Python exact rational
+        Human-directed (Zichao Wei) multi-agent AI workflow combining Python exact rational
         LP/PSD dual certificate discovery, small-integer unit-triangular rounding, and Lean 4
         (v4.35.0-rc2) + Mathlib formalization verified by lake comparator (Lean kernel,
         nanoda, and con-ron).
@@ -121,7 +121,7 @@ fidelity:
 review:
   status: "self-assessed"
   reviewers:
-    - "exusiaiwei (direction, scope check, and Challenge.lean sign-off)"
+    - "Zichao Wei (direction, scope check, and Challenge.lean sign-off)"
     - "AI verification agents (independent pure-Python Fraction certificate checkers)"
   notes: >-
     All Challenge.lean definitions use only standard Mathlib primitives (`Fin`, `Finset`,
